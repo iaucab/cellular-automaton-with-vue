@@ -30,7 +30,7 @@ export default {
   data() {
     return {
       isRunning: false,
-      dimension: 25,
+      dimension: undefined,
       filter: [
         [.2,  .3, .4],
         [.1,  1,  .1],
@@ -40,6 +40,18 @@ export default {
       idLoop: undefined,
       timer: 1024
     }
+  },
+  created() {
+    if(window.innerWidth < 320)
+      this.$data.dimension = 9
+    else if(window.innerWidth < 570)
+      this.$data.dimension = 15
+    else if(window.innerWidth < 780)
+      this.$data.dimension = 21
+    else if(window.innerWidth < 1024)
+      this.$data.dimension = 31
+    else
+      this.$data.dimension = 41
   },
   beforeMount() {
     this.table = store.table

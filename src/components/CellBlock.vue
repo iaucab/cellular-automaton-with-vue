@@ -65,6 +65,7 @@ export default {
     border: 1px solid #111;
     margin: 0;
     padding: 0;
+    transition: 256ms
   }
   .cell:not(.read-only) {
     cursor: pointer;
