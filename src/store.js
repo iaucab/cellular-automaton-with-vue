@@ -1,7 +1,7 @@
 import Vue from 'vue'
 
 export default {
-  debug: true,
+  debug: false,
   table: [],
   cellType: undefined,
   

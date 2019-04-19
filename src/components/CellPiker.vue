@@ -41,13 +41,13 @@ export default {
       if (this.$data.cellType === 'black')
         current = 0
       else if(this.$data.cellType === 'yellow')
-        current = .2
+        current = .1
       else if(this.$data.cellType === 'green')
-        current = .4
+        current = .3
       else if(this.$data.cellType === 'blue')
-        current = .6
+        current = .5
       else                           // Red
-        current = 1
+        current = .8
       
       store.setCellPiker(current)
       return {current, next: 0}

@@ -5,7 +5,7 @@
     <h2>Cellular automaton</h2>
     <div class="flex justify-center items-center pb-1">
       <CellPiker class="mr-1" />
-      <button @click="isRunning = !isRunning">
+      <button @click="isRunning ? stop() : start()">
         {{ isRunning ? 'stop' : 'start' }} 
       </button>
     </div>
@@ -23,6 +23,7 @@
 import DivRow from './components/DivRow.vue'
 import CellPiker from './components/CellPiker.vue'
 import store from './store'
+import { setInterval, clearInterval } from 'timers';
 
 export default {
   name: 'app',
@@ -30,7 +31,14 @@ export default {
     return {
       isRunning: false,
       dimension: 25,
-      table: undefined
+      filter: [
+        [.2,  .3, .4],
+        [.1,  1,  .1],
+        [.4,  .3, .2]
+      ],
+      table: undefined,
+      idLoop: undefined,
+      timer: 1024
     }
   },
   beforeMount() {
@@ -47,6 +55,64 @@ export default {
       }
       this.$data.table.push(row)
     }
+  },
+  methods: {
+    start() {
+      this.$data.isRunning = true
+
+      this.updateNexts()
+      store.changeCurrentToNext()
+      
+      this.$data.idLoop = setInterval(() => {
+        this.$nextTick(() => {
+          this.updateNexts()
+          store.changeCurrentToNext()
+        })
+      }, this.$data.timer)
+    },
+    stop() {
+      this.$data.isRunning = false
+      clearInterval(this.$data.idLoop)
+    },
+    updateNexts() {
+      const amplitude = Math.floor(this.$data.filter.length / 2)
+
+      // Table
+      const table = this.$data.table
+      for (let row = 0; row < table.length; row++) {
+        for (let col = 0; col < table[row].length; col++) {
+          var sum = 0
+          
+          // Filter
+          const filter = this.$data.filter
+          for (let frow = 0; frow < filter.length; frow++) {
+            for (let fcol = 0; fcol < filter[frow].length; fcol++) {
+              const fvalue = this.$data.filter[frow][fcol]
+              let rowAdjacent = row + frow - amplitude
+              let colAdjacent = col + fcol - amplitude
+              
+              sum += this.getAdjacent(rowAdjacent, colAdjacent) * fvalue
+            }
+            
+          }
+
+          // Reactive method
+          // store.updateNextCell(row, col, sum)
+          
+          // Not reactive. I do not need the reactive method 
+          // because the next value does not show in the view
+          table[row][col].next = sum
+        }        
+      }
+    },
+    getAdjacent(row, col) {      
+      if(row < 0 || col < 0 || row >= this.$data.dimension || col >= this.$data.dimension)
+        return 0
+      else {
+        return this.$data.table[row][col].current
+      }
+    }
+    
   },
   components: {
     DivRow, CellPiker
