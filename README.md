@@ -1,4 +1,4 @@
-# automatas-celulares
+# cellular-automaton-with-vue
 
 ## Project setup
 

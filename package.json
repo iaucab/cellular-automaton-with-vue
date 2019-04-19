@@ -1,5 +1,5 @@
 {
-  "name": "automatas-celulares",
+  "name": "cellular-automaton-with-vue",
   "version": "0.1.0",
   "private": true,
   "scripts": {
