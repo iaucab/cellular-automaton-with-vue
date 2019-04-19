@@ -1,6 +1,7 @@
 <template>
   <div class="flex items-center">
     <CellBlock :value="sample"
+      :readOnly="true"
       class="mr-1"
     />
     <select v-model="cellType">

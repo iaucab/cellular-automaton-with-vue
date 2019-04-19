@@ -3,7 +3,7 @@ import Vue from 'vue'
 export default {
   debug: true,
   table: [],
-  cellType: .2,
+  cellType: undefined,
   
   setCellPiker(newValue) {
     // eslint-disable-next-line

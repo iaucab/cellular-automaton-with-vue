@@ -1,6 +1,6 @@
 <template>
   <div class="cell"
-    :class="color"
+    :class="color + (readOnly ? ' read-only' : '')"
     @click="updateCellType"
     @mouseover.ctrl="updateCellType"
   ></div>
@@ -12,7 +12,11 @@ import store from '../store'
 export default {
   name: 'CellBlock',
   props: {
-    value: Object
+    value: Object,
+    readOnly: {
+      type: Boolean,
+      default: false
+    }
   },
   computed: {
     color() {
@@ -30,6 +34,8 @@ export default {
   },
   methods: {
     updateCellType() {
+      if(this.readOnly) return
+
       const {row, col} = this.value
       store.updateCellType(row, col)
     }
@@ -57,8 +63,13 @@ export default {
     width: 1em;
     height: 1em;
     border: 1px solid #111;
-    cursor: pointer;
     margin: 0;
     padding: 0;
+  }
+  .cell:not(.read-only) {
+    cursor: pointer;
+  }
+  .cell.read-only {
+    cursor: default;
   }
 </style>
