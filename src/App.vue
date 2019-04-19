@@ -9,7 +9,8 @@
         {{ isRunning ? 'stop' : 'start' }} 
       </button>
     </div>
-    <div style="border: 1px solid #111">
+    <div class="table"
+      :style="'width: '+18*dimension+'px'">
       <DivRow v-for="(row, index) in table"
         :cells="row"
         :key="index"
@@ -68,6 +69,10 @@ body {
 }
 #app img {
   max-width: 10em;
+}
+#app .table {
+  border: 1px solid #111;
+  margin: 0 auto;  
 }
 .pb-1 {
   padding-bottom: 1em;
