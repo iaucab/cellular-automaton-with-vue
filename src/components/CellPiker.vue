@@ -4,7 +4,9 @@
       :readOnly="true"
       class="mr-1"
     />
-    <select v-model="cellType">
+    <select v-model="cellType"
+      :class="cellType"
+    >
       <option v-for="type in types"
         :key="type"
         :class="type"

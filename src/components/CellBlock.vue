@@ -46,18 +46,23 @@ export default {
 <style>
   .black {
     background: #333;
+    color: #ddd;
   }
   .red {
     background: #f55;
+    color: #333;
   }
   .blue {
     background: #55f;
+    color: #ddd;
   }
   .green {
     background: #5d5;
+    color: #333;
   }
   .yellow {
     background: #dd5;
+    color: #333;
   }
   .cell {
     width: 1em;

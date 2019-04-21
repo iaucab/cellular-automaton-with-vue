@@ -42,7 +42,7 @@ export default {
     }
   },
   created() {
-    if(window.innerWidth < 320)
+    if(window.innerWidth < 350)
       this.$data.dimension = 9
     else if(window.innerWidth < 570)
       this.$data.dimension = 15
@@ -142,6 +142,7 @@ body {
   font-size: 16px;
   text-align: center;
   color: #2c3e50;
+  max-width: 100vw;
   padding: 1em;
   margin: 0 auto;
 }
@@ -151,6 +152,14 @@ body {
 #app .table {
   border: 1px solid #111;
   margin: 0 auto;  
+}
+#app button, #app select {
+  padding: .25em .5em;
+  border: 1px solid #111;
+  outline: none;
+}
+#app button {
+  background: #fff;
 }
 .pb-1 {
   padding-bottom: 1em;
