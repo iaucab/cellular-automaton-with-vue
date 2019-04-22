@@ -14,7 +14,7 @@ export default {
   updateCellType(row, col) {
     // eslint-disable-next-line
     if (this.debug) console.log(`updateCellType table[${row}][${col}]=${this.cellType}`)
-    Vue.set(this.table[row][col], 'current', this.cellType)
+    Vue.set(this.table[row][col], 'type', this.cellType)
   },
 
   updateNextCell(row, col, newValue) {
@@ -30,9 +30,8 @@ export default {
     for (let i = 0; i < this.table.length; i++) {
       const row = this.table[i];
       for (let j = 0; j < row.length; j++) {
-        const cell = row[j];
-        Vue.set(cell, 'current', cell.next)
-        Vue.set(cell, 'next', 0)
+        const cell = row[j]
+        Vue.set(cell, 'type', cell.next)
       }
     }
   }

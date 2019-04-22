@@ -20,16 +20,18 @@ export default {
   },
   computed: {
     color() {
-      if (this.value.current < .1)
+      if (this.value.type === 0)
         return 'black'
-      else if(this.value.current < .3)
+      else if(this.value.type === 1)
         return 'yellow'
-      else if(this.value.current < .5)
+      else if(this.value.type === 2)
         return 'green'
-      else if(this.value.current < .8)
+      else if(this.value.type === 3)
         return 'blue'
-      else
+      else if(this.value.type === 4)
         return 'red'
+      else
+        return 'white'
     }
   },
   methods: {
@@ -44,6 +46,9 @@ export default {
 </script>
 
 <style>
+  .white {
+    background: #ddd; 
+  }
   .black {
     background: #333;
     color: #ddd;

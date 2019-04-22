@@ -7,12 +7,12 @@
     <select v-model="cellType"
       :class="cellType"
     >
-      <option v-for="type in types"
-        :key="type"
-        :class="type"
-        :value="type"
+      <option v-for="type2 in types"
+        :key="type2"
+        :class="type2"
+        :value="type2"
       >
-        {{ type }}
+        {{ type2 }}
       </option>
     </select>
   </div>
@@ -33,26 +33,26 @@ export default {
         'green',
         'yellow'
       ],
-      cellType: 'yellow'
+      cellType: 'red'
     }
   },
   computed: {
     sample() {
-      var current;
+      var type;
 
       if (this.$data.cellType === 'black')
-        current = 0
+        type = 0
       else if(this.$data.cellType === 'yellow')
-        current = .1
+        type = 1
       else if(this.$data.cellType === 'green')
-        current = .3
+        type = 2
       else if(this.$data.cellType === 'blue')
-        current = .5
-      else                           // Red
-        current = .8
+        type = 3
+      else if(this.$data.cellType === 'red')
+        type = 4
       
-      store.setCellPiker(current)
-      return {current, next: 0}
+      store.setCellPiker(type)
+      return {type, next: 0}
     }
   },
   components: {

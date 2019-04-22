@@ -32,9 +32,9 @@ export default {
       isRunning: false,
       dimension: undefined,
       filter: [
-        [.2,  .3, .4],
-        [.1,  1,  .1],
-        [.4,  .3, .2]
+        [.75, 1, .75],
+        [1, .25, 1],
+        [.75, 1, .75]
       ],
       table: undefined,
       idLoop: undefined,
@@ -52,6 +52,7 @@ export default {
       this.$data.dimension = 31
     else
       this.$data.dimension = 41
+    //this.$data.dimension = 5
   },
   beforeMount() {
     this.table = store.table
@@ -61,7 +62,7 @@ export default {
         row.push({
           row: i,
           col: j,
-          current: 0, // current: Math.random(),
+          type: 0,
           next: 0
         })
       }
@@ -93,7 +94,7 @@ export default {
       const table = this.$data.table
       for (let row = 0; row < table.length; row++) {
         for (let col = 0; col < table[row].length; col++) {
-          var sum = 0
+          const types = [0,0,0,0,0]
           
           // Filter
           const filter = this.$data.filter
@@ -102,29 +103,46 @@ export default {
               const fvalue = this.$data.filter[frow][fcol]
               let rowAdjacent = row + frow - amplitude
               let colAdjacent = col + fcol - amplitude
+              const type = this.getAdjacent(rowAdjacent, colAdjacent)
               
-              sum += this.getAdjacent(rowAdjacent, colAdjacent) * fvalue
+              types[type] += 1 * fvalue
             }
             
           }
 
-          // Reactive method
-          // store.updateNextCell(row, col, sum)
-          
-          // Not reactive. I do not need the reactive method 
-          // because the next value does not show in the view
-          table[row][col].next = sum
+          // Remove 0: black blocks
+          table[row][col].next = this.getBestType(table[row][col].type, types.slice(1))
         }        
       }
     },
     getAdjacent(row, col) {      
-      if(row < 0 || col < 0 || row >= this.$data.dimension || col >= this.$data.dimension)
+      if(row < 0)
+        row = this.$data.dimension-1
+      if(col < 0)
+        col = this.$data.dimension-1
+      if(row >= this.$data.dimension)
+        row = 0
+      if(col >= this.$data.dimension)
+        col = 0
+      
+      return this.$data.table[row][col].type
+    },
+    getBestType(current, types) {
+      const copy = [...types]
+      
+      types.sort((a,b) => b-a)
+      const best = types[0]
+      const second = types[1]
+
+      // die if have 2 types with same value
+      if(best === second)
         return 0
-      else {
-        return this.$data.table[row][col].current
-      }
-    }
-    
+
+      if (Math.round(best) === 3 || (current !== 0 && Math.round(best) === 2))
+        return copy.indexOf(best) +1
+      else
+        return 0
+    }    
   },
   components: {
     DivRow, CellPiker
